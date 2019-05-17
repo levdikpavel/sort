@@ -27,11 +27,10 @@ func TestHeap(t *testing.T) {
 	}
 }
 
-func isSorted(a []int) bool {
-	for i := 1; i < len(a); i++ {
-		if a[i] < a[i-1] {
-			return false
-		}
+func TestQuick(t *testing.T) {
+	a := []int{2, 5, 1, 7, 6, 8, 1, 4}
+	Quick(a)
+	if !isSorted(a) {
+		t.Errorf("Slice is not sorted!\n%v", a)
 	}
-	return true
 }

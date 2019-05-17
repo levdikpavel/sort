@@ -6,7 +6,8 @@ func Heap(a []int) {
 	end := count - 1
 	for ; end > 0; end-- {
 		Swap(a, 0, end)
-		heapify(a, end)
+
+		siftDown(a, 0, end)
 	}
 }
 
@@ -28,4 +29,34 @@ func siftUp(a []int, start, end int) {
 			return
 		}
 	}
+}
+func siftDown(a []int, start, end int) {
+	parentIdx := start
+	for parentIdx < end {
+		parent := a[parentIdx]
+		childIdx1 := parentIdx*2 + 1
+		childIdx2 := parentIdx*2 + 2
+		swapIdx := -1
+		swapIdx = checkChildSiftDown(a, parent, childIdx1, swapIdx, end)
+		swapIdx = checkChildSiftDown(a, parent, childIdx2, swapIdx, end)
+		if swapIdx >= 0 {
+			Swap(a, parentIdx, swapIdx)
+			parentIdx = swapIdx
+		} else {
+			return
+		}
+	}
+}
+
+func checkChildSiftDown(a []int, parent, childIdx, swapIdx, end int) int {
+	if childIdx < end {
+		child := a[childIdx]
+		if child > parent {
+			if swapIdx >= 0 && child < a[swapIdx] {
+				return swapIdx
+			}
+			return childIdx
+		}
+	}
+	return swapIdx
 }
